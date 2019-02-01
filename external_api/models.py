@@ -1,0 +1,32 @@
+from django.db import models
+
+import hashlib
+import random
+
+def generateToken():
+    return hashlib.sha256(str(random.random()).encode()).hexdigest()
+
+class Device(models.Model):
+    device_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=200, null=True)
+    location = models.CharField(max_length=1000, null=True)
+    longitude = models.CharField(max_length=25, null=True)
+    latitude = models.CharField(max_length=25, null=True)
+    token = models.CharField(max_length=500, null=True)
+
+    def __str__(self):
+        return '%s (ID: %s)' % (self.name, self.device_id)
+
+    def save(self):
+        self.token = generateToken()
+        super(Device, self).save()
+
+class AirQuality(models.Model):
+    pm25 = models.FloatField(verbose_name="PM2.5 (µm/m^3)", null=True)
+    pm10 = models.FloatField(verbose_name="PM10 (µm/m^3)", null=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    device_id = models.ForeignKey(Device, on_delete=models.CASCADE, default=None)
+
+    class Meta:
+        verbose_name = "Air Quality"
+        verbose_name_plural = 'Air Quality'
