@@ -2,6 +2,7 @@ from django.db import models
 
 import hashlib
 import random
+from datetime import datetime
 
 def generateToken():
     return hashlib.sha256(str(random.random()).encode()).hexdigest()
@@ -22,10 +23,14 @@ class Device(models.Model):
         super(Device, self).save()
 
 class AirQuality(models.Model):
-    pm25 = models.FloatField(verbose_name="PM2.5 (µm/m^3)", null=True)
-    pm10 = models.FloatField(verbose_name="PM10 (µm/m^3)", null=True)
+    pm25 = models.FloatField(verbose_name="PM2.5 (µm/m^3)", default=0)
+    pm10 = models.FloatField(verbose_name="PM10 (µm/m^3)", default=0)
+    pm1 = models.FloatField(verbose_name="PM1 (µm/m^3)", default=0)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     device_id = models.ForeignKey(Device, on_delete=models.CASCADE, default=None)
+
+    def __str__(self):
+        return '%s (%s)' % (self.device_id, self.created_at.strftime("%d/%m/%Y %H:%M:%S"))
 
     class Meta:
         verbose_name = "Air Quality"
