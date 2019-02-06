@@ -5,8 +5,8 @@ services:
     image: postgres
   web:
     build: .
-    # command: gunicorn -b 0.0.0.0:8000 airquality_itkmitl.wsgi
-    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn -b 0.0.0.0:8000 airquality_itkmitl.wsgi
+    # command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
     ports:

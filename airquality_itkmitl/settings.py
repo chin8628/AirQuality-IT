@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['localhost', 'cloudian.in.th', 'www.cloudian.in.th', 'aqi.cloud
 # Application definition
 
 INSTALLED_APPS = [
+    'report_website.apps.ReportWebsiteConfig',
     'external_api.apps.ExternalApiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
