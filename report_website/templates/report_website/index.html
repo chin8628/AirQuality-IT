@@ -1,0 +1,146 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Air Quality Monitor</title>
+    <link rel="stylesheet" href="{% static 'report_website/css/main.css' %}" />
+  </head>
+
+  <body>
+    <div class="container">
+      <!--div class="top">
+      </div-->
+
+      {% if not devices %}
+        <div class="content">
+          <h1 style="color: #898989">No data</h1>
+        </div>
+      {% endif %}
+
+      <div class="content">
+        {% for device in devices %}
+          <div class="card">
+            <span class="block pollutant">PM 2.5 (µg/m<sup>3</sup>)</span>
+            <span class="block number">{{device.last_update_pm25}}</span>
+            <div class="aqi-wrap">
+              <span class="aqi aqi-{{ device.color }}">{{ device.warning }}</span>
+            </div>
+            <div class="meta-wrap">
+              <span class="meta"> <img src="{% static 'report_website/img/ic-location.svg' %}" /> {{device.location}}</span>
+              <span class="meta"> <img src="{% static 'report_website/img/ic-clock.svg' %}" /> {{ device.last_update_time }}</span>
+            </div>
+            <canvas id="chart-{{device.slug}}"></canvas>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="bottom">
+        <img src="{% static 'report_website/img/itkmitl-logo.png' %}" />
+        <button class="about-btn" onclick="openModal('about-modal')">About this project</button>
+      </div>
+    </div>
+
+    <div class="modal-bg closed" id="about-modal">
+      <div class="modal-box">
+        <img src="{% static 'report_website/img/ic-close.svg' %}" alt="close" class="close" onclick="closeModal('about-modal')">
+        <h1>Contributors</h1>
+        <ul>
+          <li>Assoc.Prof. Dr. Panwit Tuwanut</li>
+          <li>Boonyarith Piriyothinkul</li>
+          <li>Nathan Yiangsupapaanontr</li>
+          <li>Nopparut Sae-Lim</li>
+          <li>Wiput Poothong</li>
+        </ul>
+        <p class="grayed">With Material icons and Graph.js</p>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js" integrity="sha256-MZo5XY1Ah7Z2Aui4/alkfeiq3CopMdV/bbkc/Sh41+s="
+      crossorigin="anonymous"></script>
+
+
+    <script>
+      window.onload = function () {
+        {% for device in devices %}
+          let ctx_{{ device.slug }} = document.getElementById("chart-{{ device.slug }}").getContext("2d");
+
+          let gradientFill_{{ device.slug }} = ctx_{{ device.slug }}.createLinearGradient(0, 0, 0, 150);
+          gradientFill_{{ device.slug }}.addColorStop(0, "#15D1FA");
+          gradientFill_{{ device.slug }}.addColorStop(1, "rgba(21, 209, 250, 0)");
+
+          let config_{{ device.slug }} = {
+            type: "line",
+            data: {
+              labels: {{ device.label }},
+              datasets: [
+                {
+                  label: "PM 2.5",
+                  backgroundColor: gradientFill_{{ device.slug }},
+                  borderColor: "#0FAACC",
+                  data: {{ device.value }},
+                  fill: true
+                }
+              ]
+            },
+            options: {
+              responsive: true,
+              title: {
+                display: false
+              },
+              hover: {
+                mode: "nearest",
+                intersect: true
+              },
+              scales: {
+                xAxes: [
+                  {
+                    display: false,
+                    scaleLabel: {
+                      display: true,
+                      labelString: "Month"
+                    }
+                  }
+                ],
+                yAxes: [
+                  {
+                    display: false,
+                    scaleLabel: {
+                      display: true,
+                      labelString: "Value"
+                    }
+                  }
+                ]
+              },
+              legend: { display: false },
+              layout: {
+                padding: {
+                  left: 0,
+                  right: 0,
+                  top: 4,
+                  bottom: 0
+                }
+              }
+            }
+          };
+
+          new Chart(ctx_{{ device.slug }}, config_{{ device.slug }});
+        {% endfor %}
+      };
+    </script>
+
+    <script>
+      const openModal = function (modalId) {
+        document.getElementById(modalId).classList.remove('closed');
+      }
+      const closeModal = function (modalId) {
+        document.getElementById(modalId).classList.add('closed');
+      }
+    </script>
+  </body>
+
+</html>

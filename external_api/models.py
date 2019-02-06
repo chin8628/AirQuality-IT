@@ -19,7 +19,9 @@ class Device(models.Model):
         return '%s (ID: %s)' % (self.name, self.device_id)
 
     def save(self):
-        self.token = generateToken()
+        if (self.token == None):
+            self.token = generateToken()
+
         super(Device, self).save()
 
 class AirQuality(models.Model):
