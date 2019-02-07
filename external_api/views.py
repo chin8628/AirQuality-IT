@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from .models import AirQuality, Device
 from django.views.decorators.http import require_POST
+from rest_framework import routers, serializers, viewsets
 
 @require_POST
 def add(request):
@@ -22,3 +23,15 @@ def add(request):
     AirQuality(device_id=device, pm1=pm1, pm10=pm10, pm25=pm25).save()
 
     return HttpResponse("Done")
+
+# Serializers define the API representation.
+class AirQualitySerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = AirQuality
+        fields = ['pm1', 'pm25', 'pm10', 'device_id']
+
+# ViewSets define the view behavior.
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = AirQuality.objects.all()
+    serializer_class = AirQualitySerializer
+
