@@ -17,9 +17,9 @@ jobs:
           name: Test django container
           command: |
             docker-compose up -d
-            docker-compose up run web pwd
-            docker-compose up run web ls
-            docker-compose up run web python manage.py test
+            docker-compose run web pwd
+            docker-compose run web ls
+            docker-compose run web python manage.py test
       - run:
           name: Build and Push Docker image
           command: |
