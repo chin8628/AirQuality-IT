@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.7.2
+      - image: project_web:latest
     steps:
       - checkout
       - run:
