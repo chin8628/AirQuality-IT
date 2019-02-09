@@ -6,6 +6,10 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Django test
+          command: |
+            docker-compose run web python manage.py test
+      - run:
           name: Run Tests
           command: |
             python manage.py test
