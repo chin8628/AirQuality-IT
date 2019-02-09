@@ -14,10 +14,10 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
-        name: Run django container
-        command: |
-          docker-compose up -d
-          docker cp . web:/code
+          name: Run django container
+          command: |
+            docker-compose up -d
+            docker cp . web:/code
       - run:
           name: Test django
           command: |
