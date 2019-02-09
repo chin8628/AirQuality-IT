@@ -3,7 +3,6 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.7.2
-      - image: project_web:latest
     steps:
       - checkout
       - run:
@@ -17,11 +16,11 @@ jobs:
       - run:
           name: Test django container
           command: |
-            pwd
-            ls -l
             docker-compose up -d
             docker-compose run web pwd
             docker-compose run web ls -l
+            pwd
+            ls -l
             docker-compose run web python manage.py test
       - run:
           name: Build and Push Docker image
