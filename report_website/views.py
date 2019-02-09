@@ -5,18 +5,21 @@ import datetime
 import itertools
 from statistics import mean
 
+
 def index(request):
     devices_data = []
     devices = Device.objects.all()
     delta_24hr = datetime.datetime.now() - datetime.timedelta(days=1)
 
     for device in devices:
-        airquality_log = AirQuality.objects.filter(device_id=device, created_at__gte=delta_24hr).order_by('created_at')
+        airquality_log = AirQuality.objects.filter(
+            device_id=device, created_at__gte=delta_24hr).order_by('created_at')
 
         if airquality_log.count() == 0:
             continue
 
-        grouped_air_log = itertools.groupby(airquality_log, lambda x: x.created_at.strftime("%Y/%m/%d %H:00"))
+        grouped_air_log = itertools.groupby(
+            airquality_log, lambda x: x.created_at.strftime("%Y/%m/%d %H:00"))
         grouped_air_log_lst = list(
             map(
                 lambda x: (
@@ -28,7 +31,8 @@ def index(request):
         )
 
         last_update_pm25 = airquality_log.reverse()[0].pm25
-        last_update_time = airquality_log.reverse()[0].created_at.strftime('%H:%M')
+        last_update_time = airquality_log.reverse(
+        )[0].created_at.strftime('%H:%M')
         warning_str = ''
         color_tag = ''
 
