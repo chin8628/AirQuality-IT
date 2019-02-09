@@ -11,21 +11,16 @@ jobs:
             curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
             chmod +x ~/docker-compose
             sudo mv ~/docker-compose /usr/local/bin/docker-compose
-      - setup_remote_docker
-      - run:
-          name: Django test
-          command: |
-            docker-compose run web python manage.py test
-      - run:
-          name: Run Tests
-          command: |
-            python manage.py test
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
-          name: Build and push Docker image
+          name: Django test
           command: |
-            docker build -t chin8628/airquality-itkmitl .
+            docker-compose up -d
+            docker-compose run web python manage.py test
+      - run:
+          name: Push Docker image
+          command: |
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
             docker push chin8628/$airquality-itkmitl
       # - run:
