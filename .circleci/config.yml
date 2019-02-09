@@ -14,17 +14,18 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
-          name: Test django container
+        name: Run django container
+        command: |
+          docker-compose up -d
+          docker cp . web:/code
+      - run:
+          name: Test django
           command: |
-            docker-compose up -d
-            docker cp . web:/code
-            docker-compose run web pwd
-            docker-compose run web ls
             docker-compose run web python manage.py test
       - run:
           name: Build and Push Docker image
           command: |
-            docker build -t chin8628/airquality-itkmitl
+            docker build . -t chin8628/airquality-itkmitl
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
             docker push chin8628/airquality-itkmitl
       # - run:
