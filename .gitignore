@@ -59,4 +59,5 @@ target/
 
 /static/
 
-\.vscode/
+# VsCode
+.vscode/
