@@ -61,3 +61,6 @@ target/
 
 # VsCode
 .vscode/
+
+# Environment files
+.env*
