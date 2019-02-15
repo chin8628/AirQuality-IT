@@ -2,10 +2,13 @@ version: '3'
 
 services:
   db:
-    image: mysql
-    command: --default-authentication-plugin=mysql_native_password
+    container_name: db
+    image: mariadb
     environment:
-      MYSQL_ROOT_PASSWORD: 12345678
+      - MYSQL_DATABASE=airquality_it
+      - MYSQL_USER=airquality_it
+      - MYSQL_PASSWORD=airquality_it
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
   web:
     container_name: web
     build: .
@@ -13,4 +16,13 @@ services:
     volumes:
       - .:/code
     ports:
-      - "8000:8000"
+      - 8000:8000
+    depends_on:
+      - "db"
+    environment:
+      - DJANGO_SECRET_KEY=ABCDEFG123456789
+      - DJANGO_DEBUG=True
+      - DATABASE_USER=airquality_it
+      - DATABASE_PASS=airquality_it
+      - DATABASE_NAME=airquality_it
+      - DATABASE_HOST=db
