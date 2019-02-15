@@ -14,17 +14,20 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
-          name: Run unittests on django
+          name: Start the django container
           command: |
             docker-compose -f docker-compose.test.yml up -d
             docker cp . web:/code
-      #       docker-compose -f docker-compose.test.yml run web python manage.py test
-      # - run:
-      #     name: Build and Push Docker image
-      #     command: |
-      #       docker build . -t chin8628/airquality_itkmitl_web
-      #       echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
-      #       docker push chin8628/airquality_itkmitl_web
+      - run:
+          name: Run django unittest
+          command: |
+            docker exec web python manage.py test
+      - run:
+          name: Build and Push Docker image
+          command: |
+            docker build . -t chin8628/airquality_itkmitl_web
+            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
+            docker push chin8628/airquality_itkmitl_web
       # - run:
       #     name: Deploy app to Digital Ocean Server via Docker
       #     command: |
