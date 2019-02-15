@@ -19,6 +19,7 @@ jobs:
             docker-compose -f docker-compose.test.yml up --no-start
             docker cp . web:/code
             docker-compose -f docker-compose.test.yml up --no-recreate -d
+            docker container ls
             docker exec web python manage.py test
       # - run:
       #     name: Run django unittest
