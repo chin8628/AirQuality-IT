@@ -21,6 +21,7 @@ jobs:
       - run:
           name: Run django unittest
           command: |
+            docker-compose -f docker-compose.test.yml run web ls -l
             docker-compose -f docker-compose.test.yml run web ./wait-for-it.sh db:3306 -- python manage.py test
       - run:
           name: Build and Push Docker image
