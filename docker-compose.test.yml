@@ -12,7 +12,7 @@ services:
   web:
     container_name: web
     build: .
-    command: gunicorn -b 0.0.0.0:8000 airquality_itkmitl.wsgi
+    command: ["./wait-for-it.sh", "db:3306", "--", "gunicorn", "-b", "0.0.0.0:8000", "airquality_itkmitl.wsgi"]
     volumes:
       - .:/code
     ports:

@@ -17,11 +17,11 @@ jobs:
           name: Start the django container
           command: |
             docker-compose -f docker-compose.test.yml up -d
-            docker cp . web:/code
+            docker cp . web:/code # circleci cannot mount volume so i need to cp files by myself
       - run:
           name: Run django unittest
           command: |
-            docker exec web python manage.py test
+            docker-compose -f docker-compose.test.yml run web python manage.py test
       - run:
           name: Build and Push Docker image
           command: |
