@@ -14,13 +14,10 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
-          name: Start the django container
+          name: Run unittests on django
           command: |
             docker-compose -f docker-compose.test.yml up -d
             docker cp . web:/code
-      - run:
-          name: Run django unittest
-          command: |
             docker exec web python manage.py test
       - run:
           name: Build and Push Docker image
