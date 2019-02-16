@@ -64,3 +64,4 @@ target/
 
 # Environment files
 .env*
+docker-compose\.prod\.yml
