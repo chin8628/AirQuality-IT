@@ -26,7 +26,7 @@ SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 DEBUG = os.environ['DJANGO_DEBUG']
 
 ALLOWED_HOSTS = ['localhost', 'cloudian.in.th',
-                 'www.cloudian.in.th', 'aqi.cloudian.in.th']
+                 'www.cloudian.in.th', 'aqi.cloudian.in.th', '0.0.0.0']
 
 
 # Application definition
