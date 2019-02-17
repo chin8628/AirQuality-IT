@@ -14,7 +14,7 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
-          name: Start the django container && Run the django unittest
+          name: Start the django container & Run the django unittest
           command: |
             docker-compose -f docker-compose.test.yml up -d
             docker exec web ./wait-for-it.sh db:3306 -- python manage.py test
@@ -27,5 +27,5 @@ jobs:
       - run:
           name: Deploy app to Digital Ocean Server via Docker
           command: |
-            ssh -o StrictHostKeyChecking=no root@cloudian.in.th "bash /home/boonyarith/circleci-script/airquality_it deploy.sh"
+            ssh -o StrictHostKeyChecking=no boonyarith@cloudian.in.th "bash /home/boonyarith/circleci-script/airquality_it deploy.sh"
 
