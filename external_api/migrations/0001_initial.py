@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Device',
             fields=[
-                ('device_id', models.AutoField(default='0', primary_key=True, serialize=False)),
+                ('device_id', models.AutoField(primary_key=True, serialize=False)),
                 ('name', models.CharField(max_length=200, null=True)),
                 ('location', models.CharField(max_length=1000, null=True)),
                 ('longitude', models.CharField(max_length=25, null=True)),

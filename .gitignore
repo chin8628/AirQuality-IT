@@ -59,4 +59,9 @@ target/
 
 /static/
 
-\.vscode/
+# VsCode
+.vscode/
+
+# Environment files
+.env*
+docker-compose\.prod\.yml

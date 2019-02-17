@@ -20,13 +20,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '7_4n#yl%zcr6p!r*(*0ke034#h1i$k5x4pjp4@f_jux$n)e+$t'
-# SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
+SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.environ['DJANGO_DEBUG'] == 'True':
+    DEBUG = True
+elif os.environ['DJANGO_DEBUG'] == 'False':
+    DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', 'cloudian.in.th', 'www.cloudian.in.th', 'aqi.cloudian.in.th']
+ALLOWED_HOSTS = ['localhost', 'aqi.cloudian.in.th']
 
 
 # Application definition
@@ -78,11 +80,12 @@ WSGI_APPLICATION = 'airquality_itkmitl.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ['DATABASE_NAME'],
+        'USER': os.environ['DATABASE_USER'],
+        'PASSWORD': os.environ['DATABASE_PASS'],
+        'HOST': os.environ['DATABASE_HOST'],
+        'PORT': '3306',
     }
 }
 
