@@ -27,5 +27,5 @@ jobs:
       - run:
           name: Deploy app to Digital Ocean Server via Docker
           command: |
-            ssh -o StrictHostKeyChecking=no boonyarith@cloudian.in.th "bash /home/boonyarith/circleci-script/airquality_it/deploy.sh"
+            ssh -o StrictHostKeyChecking=no boonyarith@cloudian.in.th "cd /home/boonyarith/circleci-script/airquality_it && bash ./deploy.sh"
 
