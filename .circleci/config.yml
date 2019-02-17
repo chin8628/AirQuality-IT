@@ -24,7 +24,8 @@ jobs:
             docker build . -t chin8628/airquality_itkmitl_web
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
             docker push chin8628/airquality_itkmitl_web
-      # - run:
-      #     name: Deploy app to Digital Ocean Server via Docker
-      #     command: |
-      #       ssh -o StrictHostKeyChecking=no root@hello.dpunks.org "/bin/bash ./deploy_app.sh ariv3ra/$IMAGE_NAME:$TAG"
+      - run:
+          name: Deploy app to Digital Ocean Server via Docker
+          command: |
+            ssh -o StrictHostKeyChecking=no root@cloudian.in.th "bash /home/boonyarith/circleci-script/airquality_it deploy.sh"
+
