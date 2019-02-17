@@ -57,4 +57,11 @@ docs/_build/
 # PyBuilder
 target/
 
-\.vscode/
+/static/
+
+# VsCode
+.vscode/
+
+# Environment files
+.env*
+docker-compose\.prod\.yml
