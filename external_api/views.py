@@ -41,12 +41,14 @@ def devices(request):
 
 
 @api_view(['GET'])
-def airquality_logs(request, hours):
+def airquality_logs(request, device_id, hours):
     hours = 24 if hours > 24 else hours
     hours = 1 if hours < 1 else hours
 
+    print(device_id, hours)
+
     time_delta = datetime.now() - timedelta(hours=hours)
-    airquality = AirQuality.objects.filter(created_at__gte=time_delta)
+    airquality = AirQuality.objects.filter(created_at__gte=time_delta, device_id=device_id)
     serializer = AirQualitySerializer(airquality, many=True, context={'request': request})
 
     return Response(serializer.data)

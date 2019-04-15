@@ -25,6 +25,6 @@ urlpatterns = [
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('devices', views.devices, name="devices"),
-    path('airquality_logs/<int:hours>', views.airquality_logs, name="airquality_logs"),
+    path('aqi_logs/<int:device_id>/<int:hours>/', views.airquality_logs, name="airquality_logs"),
     path('add/', csrf_exempt(views.add), name='add'),
 ]
