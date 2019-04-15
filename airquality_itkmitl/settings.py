@@ -34,7 +34,6 @@ ALLOWED_HOSTS = ['localhost', 'aqi.cloudian.in.th']
 # Application definition
 
 INSTALLED_APPS = [
-    'report_website.apps.ReportWebsiteConfig',
     'external_api.apps.ExternalApiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'drf_yasg',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [

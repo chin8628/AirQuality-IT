@@ -18,7 +18,7 @@ services:
     ports:
       - 8000:8000
     depends_on:
-      - "db"
+      - db
     environment:
       - DJANGO_SECRET_KEY=ABCDEFG123456789
       - DJANGO_DEBUG=True
