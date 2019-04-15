@@ -27,8 +27,8 @@ class Device(models.Model):
 
 
 class AirQuality(models.Model):
-    pm250 = models.FloatField(verbose_name="PM2.5 (µm/m^3)", default=0)
     pm100 = models.FloatField(verbose_name="PM10 (µm/m^3)", default=0)
+    pm25 = models.FloatField(verbose_name="PM2.5 (µm/m^3)", default=0)
     pm10 = models.FloatField(verbose_name="PM1 (µm/m^3)", default=0)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     device_id = models.ForeignKey(
