@@ -57,3 +57,9 @@ def lastest_aqi_log(request, device_id):
 	serializer = AirQualitySerializer(last_record, context={'request': request})
 
 	return Response(serializer.data)
+
+@api_view(["GET"])
+def get_device(request, device_id):
+	device = Device.objects.get(device_id=device_id)
+	serializer = DeviceSerializer(device)
+	return Response(serializer.data)
