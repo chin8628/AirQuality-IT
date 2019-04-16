@@ -130,3 +130,9 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 STATIC_ROOT = '/code/static/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
