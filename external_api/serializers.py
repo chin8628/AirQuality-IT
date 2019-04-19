@@ -16,6 +16,6 @@ class DeviceSerializer(serializers.ModelSerializer):
 
 class AverageAirQualitySerializer(serializers.Serializer):
     created_at_trunced_hour = serializers.DateTimeField()
-    avg_pm100 = serializers.IntegerField()
-    avg_pm25 = serializers.IntegerField()
-    avg_pm10 = serializers.IntegerField()
+    avg_pm100 = serializers.DecimalField(max_digits=6, decimal_places=4)
+    avg_pm25 = serializers.DecimalField(max_digits=6, decimal_places=4)
+    avg_pm10 = serializers.DecimalField(max_digits=6, decimal_places=4)
