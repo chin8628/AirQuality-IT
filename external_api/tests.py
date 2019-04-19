@@ -7,6 +7,7 @@ from .models import AirQuality, Device
 
 from rest_framework.test import APITestCase, APIClient
 
+
 class AirqualityTest(TestCase):
     def setUp(self):
         Device(name="test_device", longitude='123', latitude='123').save()
@@ -17,6 +18,7 @@ class AirqualityTest(TestCase):
         """Animals that can speak are correctly identified"""
         airq = AirQuality.objects.latest('id')
         self.assertEqual(airq.pm25, 10)
+
 
 class ApiTest(APITestCase):
     def setUp(self):
@@ -33,7 +35,7 @@ class ApiTest(APITestCase):
         for i in range(5):
             pm100, pm25, pm10 = randint(1, 100), randint(1, 100), randint(1, 100)
             past_date = datetime.today() - timedelta(days=2)
-            
+
             aqi_inst = AirQuality(pm100=pm100, pm25=pm25, pm10=pm10, device_id=self.device)
             aqi_inst.save()
 
@@ -47,10 +49,11 @@ class ApiTest(APITestCase):
         res = self.client.get(url, format="json")
         self.assertEqual(len(res.data), 2)
 
-    def test_can_get_24hr_aqi_log(self):
+    def test_can_get_24hr_avg_aqi_log(self):
         url = reverse('get_aqi_logs', args=[self.device.device_id, 24])
         res = self.client.get(url, format="json")
-        self.assertEqual(len(res.data), 10)
+
+        self.assertEqual(len(res.data), 1)
 
     def test_can_get_specific_device(self):
         url = reverse('get_device', args=[self.device.device_id])
