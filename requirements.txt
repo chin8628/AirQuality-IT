@@ -6,7 +6,7 @@ colorama==0.4.1
 coreapi==2.3.3
 coreschema==0.0.4
 Django==2.1.5
-djangorestframework==3.9.1
+djangorestframework==3.11.2
 django-extensions==2.1.6
 drf-yasg==1.13.0
 gunicorn==19.9.0
